@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>📝 BlogHub</h1>
+            </div>
+            <nav class="nav-desktop">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#posts" class="nav-link">Posts</a>
+                <a href="#new-blog" class="nav-link">New Blog</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+            
+            <!-- Mobile Navigation -->
+            <div class="nav-mobile">
+                <button class="hamburger-btn" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="mobile-menu" id="mobileMenu">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#posts" class="nav-link">Posts</a>
+                    <a href="#new-blog" class="nav-link">New Blog</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="welcome-section">
+                <h2>Welcome to My Blog</h2>
+                <p class="welcome-text">Discover interesting articles, share your thoughts, and connect with others through meaningful content. This is your space to explore, learn, and grow.</p>
+                <div class="welcome-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalPosts">0</span>
+                        <span class="stat-label">Blog Posts</span>
+                    </div>
+                </div>
+                <div class="welcome-actions">
+                    <a href="#new-blog" class="btn btn-primary">Start Writing</a>
+                    <a href="#posts" class="btn btn-secondary">Read Posts</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Blog Form Section -->
+        <section id="new-blog" class="section">
+            <h2>Create New Blog Post</h2>
+            <form id="blogForm" class="blog-form">
+                <div class="form-group">
+                    <label for="blogTitle">Title:</label>
+                    <input type="text" id="blogTitle" name="title" required placeholder="Enter blog title...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="blogContent">Content:</label>
+                    <textarea id="blogContent" name="content" required placeholder="Write your blog content here..." rows="8"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="blogAuthor">Author:</label>
+                    <input type="text" id="blogAuthor" name="author" required placeholder="Your name">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Publish Blog</button>
+                    <button type="button" class="btn btn-secondary" id="clearForm">Clear Form</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Blog Posts Section -->
+        <section id="posts" class="section">
+            <h2>Recent Blog Posts</h2>
+            <div id="blogPosts" class="blog-posts">
+                <article class="blog-post">
+                    <div class="blog-header">
+                        <h2>Welcome to My Blog</h2>
+                        <button class="delete-btn" onclick="deleteDefaultPost(this)" title="Delete this post">
+                            🗑️
+                        </button>
+                    </div>
+                    <p>This is my first blog post. Here you'll find interesting articles about various topics.</p>
+                    <small>Posted on: January 1, 2024 | Author: Admin</small>
+                </article>
+                
+                <article class="blog-post">
+                    <div class="blog-header">
+                        <h2>Sample Blog Post</h2>
+                        <button class="delete-btn" onclick="deleteDefaultPost(this)" title="Delete this post">
+                            🗑️
+                        </button>
+                    </div>
+                    <p>This is a sample blog post to demonstrate the layout.</p>
+                    <small>Posted on: January 2, 2024 | Author: Admin</small>
+                </article>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-section">
+                <h2>About This Blog</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Welcome to my personal blog where I share thoughts, ideas, and experiences. This platform is designed to be simple, clean, and focused on content.</p>
+                        
+                        <h3>Features</h3>
+                        <ul class="features-list">
+                            <li>✨ Dark/Light mode toggle</li>
+                            <li>📝 Create and publish new blog posts</li>
+                            <li>💾 Automatic data persistence</li>
+                            <li>📱 Responsive design for all devices</li>
+                            <li>🎨 Modern and clean interface</li>
+                        </ul>
+                        
+                        <h3>How to Use</h3>
+                        <ol class="usage-list">
+                            <li>Click "New Blog" to create a new post</li>
+                            <li>Fill in the title, content, and your name</li>
+                            <li>Click "Publish Blog" to share your post</li>
+                            <li>View all posts in the "Posts" section</li>
+                            <li>Toggle between light and dark themes</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 My Blog. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
