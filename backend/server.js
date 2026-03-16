@@ -1,80 +1,95 @@
-const express = require('express');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const BLOGS_FILE = path.join(__dirname, 'blogs.json');
+// Use writable path (works in Azure)
+const BLOGS_FILE = path.join(process.cwd(), "blogs.json");
+
+// Create file if not exists
+if (!fs.existsSync(BLOGS_FILE)) {
+  fs.writeFileSync(BLOGS_FILE, "[]");
+}
 
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../frontend')));
+// Serve frontend
+app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Helper to read blogs from file
+// Read blogs
 function readBlogs() {
-  if (!fs.existsSync(BLOGS_FILE)) return [];
-  const data = fs.readFileSync(BLOGS_FILE, 'utf-8');
   try {
+    const data = fs.readFileSync(BLOGS_FILE, "utf-8");
     return JSON.parse(data);
-  } catch {
+  } catch (err) {
     return [];
   }
 }
 
-// Helper to write blogs to file
+// Write blogs
 function writeBlogs(blogs) {
-  fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2), 'utf-8');
+  fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
 }
 
-// Get all blog posts
-app.get('/api/posts', (req, res) => {
+// Get all posts
+app.get("/api/posts", (req, res) => {
   const blogs = readBlogs();
   res.json(blogs);
 });
 
-// Add a new blog post
-app.post('/api/posts', (req, res) => {
+// Add post
+app.post("/api/posts", (req, res) => {
   const { title, content, author } = req.body;
+
   if (!title || !content || !author) {
-    return res.status(400).json({ error: 'Missing fields' });
+    return res.status(400).json({ error: "Missing fields" });
   }
+
   const blogs = readBlogs();
+
   const newBlog = {
     id: Date.now(),
     title,
     content,
     author,
-    date: new Date().toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    })
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
   };
+
   blogs.unshift(newBlog);
   writeBlogs(blogs);
+
   res.status(201).json(newBlog);
 });
 
-// Delete a blog post by id
-app.delete('/api/posts/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10);
+// Delete post
+app.delete("/api/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
   let blogs = readBlogs();
-  const initialLength = blogs.length;
-  blogs = blogs.filter(blog => blog.id !== id);
-  if (blogs.length === initialLength) {
-    return res.status(404).json({ error: 'Blog not found' });
+  const newBlogs = blogs.filter((b) => b.id !== id);
+
+  if (blogs.length === newBlogs.length) {
+    return res.status(404).json({ error: "Blog not found" });
   }
-  writeBlogs(blogs);
+
+  writeBlogs(newBlogs);
   res.json({ success: true });
 });
 
-// (Optional) Hello message endpoint
-app.get('/api/message', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
+// Test route
+app.get("/api/message", (req, res) => {
+  res.json({ message: "Hello from backend!" });
 });
 
+// Start server (IMPORTANT for Azure)
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Open http://localhost:${PORT} in your browser to view the website.`);
+  console.log("Server running on port " + PORT);
 });
