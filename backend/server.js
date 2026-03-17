@@ -35,6 +35,10 @@ function writeBlogs(blogs) {
   fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
 }
 
+app.get("/", (req, res) => {
+  res.send("Hello World");
+}
+
 // Get all posts
 app.get("/api/posts", (req, res) => {
   const blogs = readBlogs();
