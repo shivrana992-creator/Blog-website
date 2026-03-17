@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       contents: read #This is required for actions/checkout
 
@@ -21,14 +21,14 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: '22.x'
 
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-
+      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -51,13 +51,13 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_57283B9EAB8B4B1086F974A5BBD02523 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B88D131FED53407A950528F339A52730 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B60EC5436E474A57B2029645713EE461 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BC21B0A6E02A4A61B025BAE96D927A36 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E5ED129C481A4C64BA88744D605B7B0C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CFDC232D361342FA9E532E867E7741B9 }}
 
       - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
         with:
           app-name: 'blog-website'
           slot-name: 'Production'
