@@ -36,8 +36,8 @@ function writeBlogs(blogs) {
 }
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
-}
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
 
 // Get all posts
 app.get("/api/posts", (req, res) => {
