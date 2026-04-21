@@ -45,6 +45,11 @@ app.get("/api/posts", (req, res) => {
   res.json(blogs);
 });
 
+//Fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
 // Add post
 app.post("/api/posts", (req, res) => {
   const { title, content, author } = req.body;
